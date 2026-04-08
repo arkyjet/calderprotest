@@ -1,128 +1,563 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#WeAreCalder - Sunset</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --text-light: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.8);
-            --accent-gold: #fbbf24;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Horizon Space | VGoFT</title>
+  <style>
+    :root {
+      --bg: #050814;
+      --panel: rgba(10, 18, 38, 0.84);
+      --line: rgba(110, 170, 255, 0.28);
+      --text: #eef4ff;
+      --muted: #a8b7d6;
+      --accent: #63b3ff;
+      --accent-2: #9ae6ff;
+      --gold: #d9b66b;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { box-sizing: border-box; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            /* A deep sunset gradient moving from navy sky to warm horizon */
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 40%, #4338ca 70%, #c026d3 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-light);
-            padding: 1.5rem;
-        }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(70, 130, 255, 0.12), transparent 26%),
+        radial-gradient(circle at 80% 10%, rgba(120, 230, 255, 0.10), transparent 20%),
+        linear-gradient(180deg, #07101f 0%, #050814 45%, #03050d 100%);
+      min-height: 100vh;
+    }
 
-        /* The main "glass" card container */
-        .sunset-card {
-            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
-            backdrop-filter: blur(12px); /* The frosted glass effect */
-            -webkit-backdrop-filter: blur(12px); /* Safari support */
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 4rem 2rem;
-            border-radius: 24px;
-            text-align: center;
-            max-width: 550px;
-            width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1.5s ease-out;
-        }
+    .stars, .stars::before, .stars::after {
+      position: fixed;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,.85) 0 1px, transparent 2px),
+        radial-gradient(circle at 73% 24%, rgba(255,255,255,.75) 0 1.4px, transparent 2.4px),
+        radial-gradient(circle at 32% 71%, rgba(255,255,255,.75) 0 1.2px, transparent 2.2px),
+        radial-gradient(circle at 84% 63%, rgba(255,255,255,.7) 0 1px, transparent 2px),
+        radial-gradient(circle at 58% 82%, rgba(255,255,255,.75) 0 1.1px, transparent 2.1px),
+        radial-gradient(circle at 44% 36%, rgba(255,255,255,.8) 0 1px, transparent 2px);
+      opacity: .75;
+    }
 
-        .logo-frame {
-            background: white;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 2rem auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* A soft glow instead of a hard border */
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
+    .stars::before { transform: scale(1.15); opacity: .35; }
+    .stars::after { transform: scale(1.3); opacity: .18; }
 
-        .logo-frame img {
-            max-width: 80%;
-            max-height: 80%;
-            object-fit: contain;
-        }
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
 
-        .hashtag {
-            display: block;
-            color: var(--accent-gold);
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            font-size: 1rem;
-        }
+    header {
+      padding: 24px 0 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(5, 8, 20, 0.72);
+    }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
 
-        p {
-            font-size: 1.15rem;
-            line-height: 1.6;
-            color: var(--text-muted);
-            font-weight: 300;
-            margin-bottom: 2rem;
-        }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
 
-        .footer-note {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.5);
-            margin-top: auto;
-            font-weight: 400;
-        }
+    .brand .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.24em;
+      color: var(--accent-2);
+      text-transform: uppercase;
+    }
 
-        /* Gentle fade in animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .brand .title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .sunset-card { padding: 3rem 1.5rem; }
-        }
-    </style>
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+      padding: 56px 0 36px;
+    }
+
+    .hero-copy {
+      background: linear-gradient(180deg, rgba(13, 23, 48, 0.78), rgba(8, 14, 30, 0.78));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(154, 230, 255, 0.24);
+      color: var(--accent-2);
+      background: rgba(99, 179, 255, 0.08);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(38px, 6vw, 74px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+      margin: 0 0 22px;
+      max-width: 60ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn {
+      text-decoration: none;
+      color: var(--text);
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+    .btn.primary {
+      background: linear-gradient(135deg, #0f62d6, #42a5ff);
+      border-color: rgba(154, 230, 255, 0.4);
+    }
+    .btn.secondary {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(12, 20, 43, 0.9), rgba(6, 10, 22, 0.92));
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      padding: 28px;
+      position: relative;
+      min-height: 520px;
+      overflow: hidden;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+    }
+
+    .patch {
+      width: min(360px, 100%);
+      aspect-ratio: 0.85;
+      margin: 0 auto 22px;
+      border-radius: 46% 46% 22% 22% / 38% 38% 18% 18%;
+      background:
+        radial-gradient(circle at 50% 14%, rgba(124, 198, 255, .95) 0, rgba(124, 198, 255, .28) 8%, transparent 12%),
+        radial-gradient(circle at 50% 93%, rgba(88, 155, 255, .6), transparent 26%),
+        linear-gradient(180deg, #04070f 0%, #070d20 50%, #03050b 100%);
+      border: 3px solid #0f121b;
+      outline: 2px solid #1e7ae9;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      text-align: center;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), 0 20px 40px rgba(0,0,0,.35);
+    }
+
+    .patch::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(99, 179, 255, .45);
+      border-radius: 44% 44% 20% 20% / 36% 36% 16% 16%;
+    }
+
+    .patch-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .patch-top {
+      font-size: 18px;
+      letter-spacing: .18em;
+      color: var(--accent-2);
+      text-transform: uppercase;
+    }
+
+    .patch-name {
+      font-size: clamp(42px, 8vw, 74px);
+      font-weight: 900;
+      letter-spacing: .06em;
+      line-height: .9;
+    }
+
+    .patch-sub {
+      font-size: 15px;
+      color: #d7e3ff;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+
+    .crew-line {
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .stat .label {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .stat .value {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    section {
+      padding: 16px 0 24px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 104px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .timeline-time {
+      color: var(--accent-2);
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .goal-box {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+    }
+
+    .goal-highlight {
+      font-size: 28px;
+      line-height: 1.25;
+      margin: 6px 0 0;
+      font-weight: 800;
+    }
+
+    .goal-panel {
+      background: linear-gradient(180deg, rgba(15, 98, 214, .16), rgba(66, 165, 255, .08));
+      border: 1px solid rgba(99, 179, 255, .32);
+      border-radius: 24px;
+      padding: 22px;
+    }
+
+    .footer {
+      color: #8292b8;
+      text-align: center;
+      padding: 22px 0 40px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 920px) {
+      .hero, .goal-box, .grid { grid-template-columns: 1fr; }
+      .hero-card { min-height: auto; }
+    }
+
+    @media (max-width: 640px) {
+      .nav { align-items: flex-start; flex-direction: column; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .hero-copy, .hero-card, .card { padding: 20px; border-radius: 22px; }
+      h1 { font-size: 42px; }
+      .lead { font-size: 16px; }
+      .patch { padding: 20px; }
+      .stat-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
+  <div class="stars"></div>
 
-    <main class="sunset-card">
-        <div class="logo-frame">
-            <img src="logo.png" alt="Logo">
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="eyebrow">Horizon Space</span>
+        <span class="title">VGoFT Mission Page</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#goal">Mission Goal</a>
+        <a href="#crew">Crew</a>
+        <a href="#timeline">Timeline</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="overview">
+      <div class="hero-copy">
+        <div class="tag">First crewed test mission</div>
+        <h1>VGoFT</h1>
+        <p class="lead">
+          <strong>Vanguard Orbital Flight Test</strong> is Horizon Space's first full demonstration of its shuttle system in crewed orbital flight. The mission is built around proving that the vehicle can safely launch, operate in orbit, manage its payload bay systems, de-orbit, and return for runway landing.
+        </p>
+        <p class="lead">
+          The flight carries <strong>Jebadiah Kerman</strong> and <strong>Valentina Kerman</strong> on a short but high-value test profile designed to validate the shuttle for later station, logistics, and deployment missions.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#goal">View Mission Goal</a>
+          <a class="btn secondary" href="#timeline">Read Flight Timeline</a>
         </div>
-        
-        <span class="hashtag">#WeAreCalder</span>
-        <h1>A Chapter Closed.</h1>
-        
-        <p>This campaign has officially concluded. Thank you to everyone who stood together and made their voices heard. The collective effort was a success, and the spirit of community lives on.</p>
+      </div>
 
-        <div class="footer-note">
-            Sunsetted January 2026
+      <div class="hero-card">
+        <div class="patch">
+          <div class="patch-content">
+            <div class="patch-top">Horizon Space</div>
+            <div class="patch-name">VGoFT</div>
+            <div class="patch-sub">Vanguard Orbital Flight Test</div>
+            <div class="crew-line">Jebadiah Kerman · Valentina Kerman</div>
+          </div>
         </div>
-    </main>
 
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="label">Vehicle</div>
+            <div class="value">Vanguard</div>
+          </div>
+          <div class="stat">
+            <div class="label">Mission Type</div>
+            <div class="value">Crewed test</div>
+          </div>
+          <div class="stat">
+            <div class="label">Orbit</div>
+            <div class="value">Low Kerbin Orbit</div>
+          </div>
+          <div class="stat">
+            <div class="label">Duration</div>
+            <div class="value">1–2 days</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="goal">
+      <div class="section-title">Mission goal</div>
+      <div class="goal-box">
+        <div class="card">
+          <h3>Primary objective</h3>
+          <p class="goal-highlight">Demonstrate that Vanguard can complete a full end-to-end crewed orbital mission and return safely as an operational shuttle.</p>
+          <p>
+            For a first flight, the best goal is not a complicated station visit or satellite deployment. It should be a clean systems-validation mission that proves the shuttle works as a reusable spacecraft. That gives the program a believable foundation and makes later missions feel earned.
+          </p>
+        </div>
+        <div class="goal-panel">
+          <div class="section-title" style="margin-top:0">Success criteria</div>
+          <p style="margin-top:0; color: var(--text); line-height:1.7;">
+            Reach stable orbit.<br>
+            Open and close payload bay doors.<br>
+            Check orbital manoeuvring and RCS control.<br>
+            Support crew operations in orbit.<br>
+            Perform de-orbit burn.<br>
+            Complete controlled atmospheric re-entry.<br>
+            Land intact on runway.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Why this mission makes sense</div>
+      <div class="grid">
+        <article class="card">
+          <h3>Realistic first step</h3>
+          <p>
+            A test flight should focus on proving the spacecraft itself. That means keeping the profile disciplined and making every major phase of shuttle flight part of the mission.
+          </p>
+        </article>
+        <article class="card" id="crew">
+          <h3>Perfect crew pairing</h3>
+          <p>
+            Jebadiah can serve as mission commander and test pilot, while Valentina acts as pilot and systems specialist. That gives the mission a proper two-person flight test structure.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Sets up future flights</h3>
+          <p>
+            Once VGoFT succeeds, Horizon Space can move into more ambitious missions like satellite release, rendezvous practice, station resupply, lab flights, or crew rotation.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="timeline">
+      <div class="section-title">Suggested mission profile</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time">Launch</div>
+          <div>
+            <strong>Ascent to orbit.</strong>
+            Perform the first crewed launch of Vanguard and insert into a stable low orbit around Kerbin.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">Orbit day 1</div>
+          <div>
+            <strong>Systems checkout.</strong>
+            Test payload bay door operations, thermal configuration, RCS handling, crew procedures, and shuttle attitude control in multiple orientations.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">Orbit day 1–2</div>
+          <div>
+            <strong>Flight handling demonstration.</strong>
+            Conduct a small orbital manoeuvre, verify tracking and guidance performance, and photograph the vehicle and payload bay configuration.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">De-orbit</div>
+          <div>
+            <strong>Return sequence.</strong>
+            Close the bay, perform de-orbit burn, manage entry attitude, and fly the shuttle through a controlled hypersonic and subsonic descent.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">Landing</div>
+          <div>
+            <strong>Runway touchdown.</strong>
+            Finish the mission with a clean landing to prove Vanguard is ready to move from experimental status toward routine service.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Possible follow-on missions</div>
+      <div class="grid">
+        <article class="card">
+          <h3>VG-2</h3>
+          <p>First payload deployment mission, carrying a small satellite or probe from the payload bay.</p>
+        </article>
+        <article class="card">
+          <h3>VG-3</h3>
+          <p>Rendezvous and proximity operations test with a target vehicle or station module.</p>
+        </article>
+        <article class="card">
+          <h3>VG-4</h3>
+          <p>Operational logistics flight, delivering equipment or crew to a permanent Horizon Space outpost.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="footer">
+      Horizon Space · Vanguard Orbital Flight Test · First crewed orbital demonstration mission
+    </div>
+  </main>
 </body>
 </html>
